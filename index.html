@@ -1,1216 +1,2589 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coimbra Engenharia e Construções — Engenharia, Obras e Gerenciamento em BH</title>
-<meta name="description" content="Coimbra Engenharia e Construções LTDA. Engenharia civil, supervisão de obras, laudos técnicos e gerenciamento de projetos em Belo Horizonte, MG.">
-<link rel="icon" type="image/png" href="images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* =========================================================
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Coimbra Engenharia e Construções — Engenharia, Obras e Gerenciamento em BH
+    </title>
+    <meta
+      name="description"
+      content="Coimbra Engenharia e Construções LTDA. Engenharia civil, supervisão de obras, laudos técnicos e gerenciamento de projetos em Belo Horizonte, MG."
+    />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* =========================================================
    COIMBRA ENGENHARIA E CONSTRUÇÕES — Design System
    Conceito: papel de projeto técnico (blueprint) + traços de
    caderneta de obra. Cotas, esquadros e escalas como elementos
    estruturais reais, não decoração aleatória.
    ========================================================= */
 
-:root{
-  --blue:        #007AAD;
-  --blue-ink:    #005D85;
-  --paper-blue:  #D9E2E9;
-  --paper:       #FFFBFC;
-  --navy:        #0C1D32;
-
-  --ink:         var(--navy);
-  --ink-70:      rgba(12,29,50,.72);
-  --ink-45:      rgba(12,29,50,.45);
-  --line:        rgba(12,29,50,.14);
-  --line-soft:   rgba(12,29,50,.08);
-  --paper-blue-line: rgba(12,29,50,.16);
-
-  --display: "Space Grotesk", "IBM Plex Sans", sans-serif;
-  --body:    "IBM Plex Sans", "Segoe UI", sans-serif;
-  --mono:    "IBM Plex Mono", "SFMono-Regular", monospace;
-
-  --container: 1180px;
-  --radius: 2px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-}
-
-*,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
-@media (prefers-reduced-motion: reduce){
-  html{ scroll-behavior:auto; }
-  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
-}
-
-body{
-  margin:0;
-  font-family:var(--body);
-  color:var(--ink);
-  background:var(--paper);
-  -webkit-font-smoothing:antialiased;
-  line-height:1.55;
-}
-
-img{ max-width:100%; display:block; }
-a{ color:inherit; text-decoration:none; }
-ul{ margin:0; padding:0; list-style:none; }
-button{ font-family:inherit; }
-
-.container{
-  max-width:var(--container);
-  margin-inline:auto;
-  padding-inline:24px;
-}
-
-h1,h2,h3,h4{
-  font-family:var(--display);
-  color:var(--navy);
-  margin:0;
-  letter-spacing:-.01em;
-  line-height:1.05;
-}
-h1{ font-size:clamp(2.4rem,5vw + 1rem,4.4rem); font-weight:600; }
-h2{ font-size:clamp(1.7rem,3vw + 1rem,2.7rem); font-weight:600; }
-h3{ font-size:1.15rem; font-weight:600; }
-
-.eyebrow{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-family:var(--mono);
-  font-size:.72rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--blue);
-  font-weight:500;
-  margin-bottom:14px;
-}
-.eyebrow::before{
-  content:"";
-  width:22px;
-  height:1px;
-  background:var(--blue);
-  display:inline-block;
-}
-.eyebrow.on-dark{ color:#7FCBEB; }
-.eyebrow.on-dark::before{ background:#7FCBEB; }
-
-.lede{
-  font-size:1.08rem;
-  color:var(--ink-70);
-  max-width:56ch;
-}
-
-.skip-link{
-  position:absolute; left:-999px; top:0;
-  background:var(--navy); color:#fff; padding:10px 16px; z-index:999;
-  font-family:var(--mono); font-size:.8rem;
-}
-.skip-link:focus{ left:16px; top:16px; }
-
-:focus-visible{
-  outline:2px solid var(--blue);
-  outline-offset:3px;
-}
-
-/* HEADER / NAV */
-.site-header{
-  position:sticky; top:0; z-index:100;
-  background:var(--navy);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-.nav{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding-block:14px;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:#fff;
-}
-.brand-logo{ height:36px; width:auto; display:block; }
-@media (max-width:480px){ .brand-logo{ height:30px; } }
-
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:2px;
-}
-.nav-links a{
-  color:rgba(255,255,255,.78);
-  font-size:.9rem;
-  padding:10px 16px;
-  border-bottom:2px solid transparent;
-  transition:color .18s var(--ease), border-color .18s var(--ease);
-}
-.nav-links a:hover{ color:#fff; }
-.nav-links a[aria-current="page"]{
-  color:#fff;
-  border-bottom-color:var(--blue);
-}
-.nav-cta{
-  margin-left:8px;
-  background:var(--blue);
-  color:#fff !important;
-  padding:10px 18px !important;
-  border-radius:var(--radius);
-  border-bottom:none !important;
-}
-.nav-cta:hover{ background:var(--blue-ink); }
-
-.nav-toggle{
-  display:none;
-  background:none;
-  border:1px solid rgba(255,255,255,.25);
-  color:#fff;
-  width:42px; height:38px;
-  border-radius:2px;
-  cursor:pointer;
-  align-items:center;
-  justify-content:center;
-}
-.nav-toggle svg{ width:20px; height:20px; }
-
-@media (max-width: 880px){
-  .nav-toggle{ display:flex; }
-  .nav-links{
-    position:absolute;
-    top:100%; left:0; right:0;
-    background:var(--navy);
-    flex-direction:column;
-    align-items:stretch;
-    padding:8px 24px 18px;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    display:none;
-  }
-  .nav-links.is-open{ display:flex; }
-  .nav-links a{ padding:12px 4px; border-bottom:1px solid rgba(255,255,255,.08); }
-  .nav-cta{ margin-left:0; margin-top:10px; text-align:center; }
-}
-
-/* MEDIA FRAME */
-.media-frame{
-  position:relative;
-  background:var(--paper-blue);
-  overflow:hidden;
-  aspect-ratio: var(--ar, 4/3);
-}
-.media-frame img{ width:100%; height:100%; object-fit:cover; }
-.media-frame::before, .media-frame::after{
-  content:"";
-  position:absolute;
-  width:22px; height:22px;
-  z-index:2;
-  pointer-events:none;
-}
-.media-frame::before{ top:10px; left:10px; border-top:2px solid var(--navy); border-left:2px solid var(--navy); opacity:.55; }
-.media-frame::after{ bottom:10px; right:10px; border-bottom:2px solid var(--navy); border-right:2px solid var(--navy); opacity:.55; }
-.media-placeholder{
-  display:none;
-  position:absolute; inset:0;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  text-align:center;
-  padding:20px;
-  background:
-    repeating-linear-gradient(0deg, transparent, transparent 23px, var(--paper-blue-line) 23px, var(--paper-blue-line) 24px),
-    repeating-linear-gradient(90deg, transparent, transparent 23px, var(--paper-blue-line) 23px, var(--paper-blue-line) 24px),
-    var(--paper-blue);
-}
-.media-frame.is-empty img{ display:none; }
-.media-frame.is-empty .media-placeholder{ display:flex; }
-.ph-icon{ width:34px; height:34px; color:var(--blue); opacity:.8; }
-.media-placeholder p{ margin:0; font-size:.82rem; color:var(--ink-70); max-width:26ch; }
-.media-placeholder code{
-  display:inline-block; margin-top:6px; font-family:var(--mono); font-size:.74rem;
-  background:rgba(255,255,255,.7); border:1px solid var(--line); padding:3px 8px; color:var(--navy);
-}
-.media-caption{
-  position:absolute; left:10px; bottom:10px; z-index:3;
-  font-family:var(--mono); font-size:.66rem; letter-spacing:.05em;
-  color:#fff; background:rgba(12,29,50,.72); padding:4px 8px;
-}
-
-/* HERO */
-.hero{
-  position:relative;
-  padding-block:64px 88px;
-  background: linear-gradient(180deg, var(--paper) 0%, var(--paper) 70%, var(--paper-blue) 100%);
-  overflow:hidden;
-}
-.hero::before{
-  content:"";
-  position:absolute; inset:0;
-  background-image:
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size:56px 56px;
-  mask-image:radial-gradient(ellipse 90% 60% at 30% 20%, black 40%, transparent 78%);
-  pointer-events:none;
-}
-.hero-grid{ position:relative; display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center; }
-.hero-copy h1{ margin-bottom:20px; }
-.hero-copy h1 em{ font-style:normal; color:var(--blue); }
-.hero-actions{ display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
-.hero-media{ position:relative; }
-.hero-media .media-frame{ --ar:1/1; box-shadow:0 30px 60px -30px rgba(12,29,50,.35); }
-.hero-stats{ position:relative; display:flex; gap:0; margin-top:46px; border-top:1px solid var(--line); padding-top:22px; flex-wrap:wrap; }
-.hero-stats div{ padding-right:34px; margin-right:34px; border-right:1px solid var(--line); }
-.hero-stats div:last-child{ border-right:none; }
-.hero-stats strong{ display:block; font-family:var(--display); font-size:1.7rem; color:var(--navy); }
-.hero-stats span{ font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-45); }
-@media (max-width: 900px){ .hero-grid{ grid-template-columns:1fr; } .hero-media{ order:-1; max-width:420px; } }
-
-/* BOTÕES */
-.btn{
-  display:inline-flex; align-items:center; gap:10px;
-  font-family:var(--body); font-weight:600; font-size:.92rem;
-  padding:13px 24px; border-radius:var(--radius); border:1px solid transparent;
-  cursor:pointer;
-  transition:transform .15s var(--ease), background .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease);
-}
-.btn:hover{ transform:translateY(-1px); }
-.btn-primary{ background:var(--blue); color:#fff; }
-.btn-primary:hover{ background:var(--blue-ink); }
-.btn-ghost{ background:transparent; color:var(--navy); border-color:var(--line); }
-.btn-ghost:hover{ border-color:var(--navy); }
-.btn-on-dark{ background:transparent; color:#fff; border-color:rgba(255,255,255,.35); }
-.btn-on-dark:hover{ border-color:#fff; }
-.btn svg{ width:16px; height:16px; }
-
-/* SEÇÕES */
-section{ padding-block:88px; }
-.section-tight{ padding-block:64px; }
-.section-paperblue{ background:var(--paper-blue); }
-.section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:52px; flex-wrap:wrap; }
-.section-head .lede{ margin-top:14px; }
-
-/* CARDS */
-.grid{ display:grid; gap:1px; background:var(--line); border:1px solid var(--line); }
-.grid-3{ grid-template-columns:repeat(3,1fr); }
-.grid-2{ grid-template-columns:repeat(2,1fr); }
-@media (max-width:900px){ .grid-3{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:640px){ .grid-3,.grid-2{ grid-template-columns:1fr; } }
-.card{ background:var(--paper); padding:34px 28px; position:relative; }
-.card-code{ font-family:var(--mono); font-size:.72rem; color:var(--blue); letter-spacing:.06em; display:block; margin-bottom:18px; }
-.card h3{ margin-bottom:10px; }
-.card p{ color:var(--ink-70); font-size:.94rem; margin:0; }
-.card-icon{ width:34px; height:34px; color:var(--blue); margin-bottom:18px; }
-
-/* PROCESSO */
-.process{ position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
-.process::before{ content:""; position:absolute; top:17px; left:0; right:0; height:1px; background:var(--line); }
-@media (max-width:800px){ .process{ grid-template-columns:1fr; gap:28px; } .process::before{ display:none; } }
-.process-step{ position:relative; padding-right:20px; }
-.process-step .stage{
-  width:34px; height:34px; border:1px solid var(--navy); background:var(--paper);
-  border-radius:50%; display:flex; align-items:center; justify-content:center;
-  font-family:var(--mono); font-size:.78rem; color:var(--navy); margin-bottom:20px; position:relative; z-index:1;
-}
-.process-step h3{ margin-bottom:8px; font-size:1.02rem; }
-.process-step p{ color:var(--ink-70); font-size:.9rem; margin:0; }
-
-/* PROJETOS */
-.projects-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
-@media (max-width:900px){ .projects-grid{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:600px){ .projects-grid{ grid-template-columns:1fr; } }
-.project-card .media-frame{ --ar:4/3; margin-bottom:16px; }
-.project-card .p-tag{ font-family:var(--mono); font-size:.68rem; color:var(--blue); letter-spacing:.08em; text-transform:uppercase; }
-.project-card h3{ margin-top:6px; margin-bottom:4px; font-size:1.05rem; }
-.project-card p{ color:var(--ink-70); font-size:.88rem; margin:0; }
-.filters{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px; }
-.filter-tag{
-  font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; text-transform:uppercase;
-  padding:8px 14px; border:1px solid var(--line); color:var(--ink-70); background:var(--paper); cursor:pointer;
-}
-.filter-tag.is-active{ border-color:var(--navy); background:var(--navy); color:#fff; }
-
-/* CTA */
-.cta-strip{ background:var(--blue); color:#fff; padding-block:56px; }
-.cta-strip h2{ color:#fff; }
-.cta-row{ display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
-
-/* VALORES / SOBRE */
-.values-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:34px 44px; }
-@media (max-width:700px){ .values-grid{ grid-template-columns:1fr; } }
-.value-item{ display:flex; gap:18px; }
-.value-num{ font-family:var(--mono); color:var(--blue); font-size:.85rem; padding-top:2px; }
-.value-item h3{ margin-bottom:6px; }
-.value-item p{ color:var(--ink-70); font-size:.92rem; margin:0; }
-
-.split{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
-@media (max-width:900px){ .split{ grid-template-columns:1fr; gap:36px; } }
-.split.reverse .split-media{ order:2; }
-@media (max-width:900px){ .split.reverse .split-media{ order:-1; } }
-
-/* EQUIPE */
-.team-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
-@media (max-width:800px){ .team-grid{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:520px){ .team-grid{ grid-template-columns:1fr; max-width:320px; margin-inline:auto; } }
-.team-card .media-frame{ --ar:3/4; margin-bottom:14px; }
-.team-card h3{ font-size:1rem; margin-bottom:2px; }
-.team-card span{ font-family:var(--mono); font-size:.72rem; color:var(--blue); text-transform:uppercase; letter-spacing:.04em; }
-
-/* CONTATO */
-.contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; }
-@media (max-width:900px){ .contact-grid{ grid-template-columns:1fr; gap:40px; } }
-.info-list{ margin-top:30px; display:flex; flex-direction:column; gap:22px; }
-.info-item{ display:flex; gap:16px; }
-.info-item svg{ width:22px; height:22px; color:var(--blue); flex-shrink:0; margin-top:2px; }
-.info-item h3{ font-size:.9rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-45); font-family:var(--mono); font-weight:500; margin-bottom:4px; }
-.info-item p, .info-item a{ font-size:1rem; color:var(--navy); }
-.info-item a:hover{ color:var(--blue); }
-.map-frame{ border:1px solid var(--line); overflow:hidden; aspect-ratio:4/3; background:var(--paper-blue); }
-.map-frame iframe{ width:100%; height:100%; border:0; filter:grayscale(.15) contrast(1.02); }
-form.contact-form{ display:flex; flex-direction:column; gap:18px; }
-.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-@media (max-width:520px){ .form-row{ grid-template-columns:1fr; } }
-.field{ display:flex; flex-direction:column; gap:8px; }
-.field label{ font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-45); }
-.field input, .field select, .field textarea{
-  font-family:var(--body); font-size:.95rem; padding:12px 14px; border:1px solid var(--line);
-  background:var(--paper); color:var(--navy); border-radius:var(--radius);
-}
-.field textarea{ resize:vertical; min-height:120px; }
-.field input:focus, .field select:focus, .field textarea:focus{
-  outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,122,173,.15);
-}
-.form-note{ font-size:.78rem; color:var(--ink-45); }
-
-/* FAQ */
-.faq-item{ border-bottom:1px solid var(--line); padding-block:22px; }
-.faq-item summary{
-  cursor:pointer; font-family:var(--display); font-size:1.05rem; color:var(--navy);
-  display:flex; justify-content:space-between; align-items:center; list-style:none;
-}
-.faq-item summary::-webkit-details-marker{ display:none; }
-.faq-item summary::after{ content:"+"; font-family:var(--mono); color:var(--blue); font-size:1.3rem; }
-.faq-item[open] summary::after{ content:"–"; }
-.faq-item p{ color:var(--ink-70); margin-top:14px; max-width:70ch; }
-
-/* INTRO DE SEÇÃO (era "page-hero") */
-.section-intro{
-  padding-block:56px 60px;
-  background:var(--navy);
-  color:#fff;
-  position:relative;
-  overflow:hidden;
-}
-.section-intro::before{
-  content:"";
-  position:absolute; inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size:56px 56px;
-  mask-image:radial-gradient(ellipse 80% 100% at 15% 0%, black 30%, transparent 75%);
-}
-.section-intro-inner{ position:relative; max-width:760px; }
-.section-intro h2{ color:#fff; margin-bottom:16px; }
-.section-intro .lede{ color:rgba(255,255,255,.72); }
-
-/* FOOTER */
-.site-footer{ background:var(--navy); color:rgba(255,255,255,.7); padding-block:64px 28px; }
-.footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:44px; border-bottom:1px solid rgba(255,255,255,.1); }
-@media (max-width:800px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
-@media (max-width:480px){ .footer-grid{ grid-template-columns:1fr; } }
-.footer-brand .brand{ margin-bottom:16px; }
-.footer-brand .brand-logo{ height:42px; }
-.footer-brand p{ font-size:.88rem; max-width:32ch; color:rgba(255,255,255,.55); }
-.footer-col h3{ color:#fff; font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:18px; font-weight:500; }
-.footer-col ul{ display:flex; flex-direction:column; gap:11px; }
-.footer-col a{ font-size:.9rem; }
-.footer-col a:hover{ color:#fff; }
-.footer-bottom{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; padding-top:24px; font-size:.78rem; color:rgba(255,255,255,.4); font-family:var(--mono); }
-.footer-bottom a:hover{ color:#fff; }
-
-/* Reveal on scroll */
-.reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
-.reveal.is-visible{ opacity:1; transform:none; }
-
-/* âncora não fica escondida atrás do header fixo */
-main [id]{ scroll-margin-top:76px; }
-</style>
-</head>
-<body>
-<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-
-<header class="site-header">
-  <div class="container nav">
-    <a class="brand" href="#inicio">
-      <img class="brand-logo" src="images/logo-white.png" alt="Coimbra Engenharia e Construções">
-    </a>
-    <nav aria-label="Navegação principal">
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#inicio" data-nav="inicio">Início</a></li>
-        <li><a href="#empresa" data-nav="empresa">Empresa</a></li>
-        <li><a href="#servicos" data-nav="servicos">Serviços</a></li>
-        <li><a href="#projetos" data-nav="projetos">Projetos</a></li>
-        <li><a href="#contato" data-nav="contato">Contato</a></li>
-        <li><a class="nav-cta" href="#contato">Solicitar orçamento</a></li>
-      </ul>
-    </nav>
-    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    </button>
-  </div>
-</header>
-
-<main id="conteudo">
-
-  <!-- ================= INÍCIO ================= -->
-  <section id="inicio" class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Belo Horizonte · MG — desde 2021</p>
-        <h1>Engenharia que sustenta <em>cada etapa</em> da sua obra.</h1>
-        <p class="lede">A Coimbra Engenharia e Construções reúne projeto, supervisão e gerenciamento técnico em um único acompanhamento — do estudo inicial à entrega, com laudos e responsabilidade técnica em cada decisão.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#contato">
-            Solicitar orçamento
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
-        </div>
-        <div class="hero-stats">
-          <div><strong>2021</strong><span>Fundação da empresa</span></div>
-          <div><strong>M-7112-0</strong><span>Serviços de engenharia — CNAE</span></div>
-          <div><strong>BH &amp; RMBH</strong><span>Área de atuação</span></div>
-        </div>
-      </div>
-
-      <div class="hero-media">
-        <div class="media-frame" style="--ar:1/1;">
-          <img src="images/capacete.jpg" alt="Obra ou equipe da Coimbra Engenharia em atividade" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-          <div class="media-placeholder">
-            <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-            <p>Coloque a foto principal aqui</p>
-            <code>images/home-hero.jpg</code>
-          </div>
-          <span class="media-caption">Obra em andamento — BH/MG</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">O que fazemos</p>
-          <h2>Serviços técnicos de ponta a ponta</h2>
-        </div>
-        <p class="lede">Cobrimos as frentes que uma obra exige para sair do papel com segurança jurídica e técnica.</p>
-      </div>
-
-      <div class="grid grid-3">
-        <div class="card reveal">
-          <span class="card-code">CNAE 71.12-0 / 01</span>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg>
-          <h3>Engenharia Civil, Hidráulica e de Tráfego</h3>
-          <p>Elaboração e gestão de projetos estruturais, hidráulicos e viários, do estudo preliminar à execução.</p>
-        </div>
-        <div class="card reveal">
-          <span class="card-code">CNAE 71.12-0 / 02</span>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21V8l8-5 8 5v13M9 21v-7h6v7"/><path d="M4 12h16"/></svg>
-          <h3>Supervisão de Obras e Gerenciamento</h3>
-          <p>Controle de materiais, cronograma físico-financeiro e gerenciamento de contratos de execução.</p>
-        </div>
-        <div class="card reveal">
-          <span class="card-code">CNAE 71.12-0 / 03</span>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
-          <h3>Vistoria, Perícia e Laudos Técnicos</h3>
-          <p>Avaliação, arbitramento e parecer técnico de engenharia para imóveis, obras e sinistros.</p>
-        </div>
-      </div>
-
-      <div style="text-align:center; margin-top:44px;">
-        <a class="btn btn-ghost" href="#servicos">Conhecer todos os serviços</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-paperblue">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Como conduzimos</p>
-          <h2>Um método, do esquadro ao habite-se</h2>
-        </div>
-      </div>
-      <div class="process">
-        <div class="process-step reveal">
-          <span class="stage">01</span>
-          <h3>Diagnóstico e projeto</h3>
-          <p>Levantamento técnico, viabilidade e desenvolvimento do projeto executivo.</p>
-        </div>
-        <div class="process-step reveal">
-          <span class="stage">02</span>
-          <h3>Planejamento</h3>
-          <p>Cronograma, orçamento e definição de responsabilidades técnicas (ART/RRT).</p>
-        </div>
-        <div class="process-step reveal">
-          <span class="stage">03</span>
-          <h3>Execução e supervisão</h3>
-          <p>Acompanhamento de campo, controle de qualidade e gestão de fornecedores.</p>
-        </div>
-        <div class="process-step reveal">
-          <span class="stage">04</span>
-          <h3>Entrega e laudo</h3>
-          <p>Vistoria final, documentação técnica e encerramento formal da obra.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container split">
-      <div class="split-media">
-        <div class="media-frame" style="--ar:4/3;">
-          <img src="images/home-equipe.jpg" alt="Equipe técnica da Coimbra Engenharia" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-          <div class="media-placeholder">
-            <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-            <p>Foto da equipe em campo ou no escritório</p>
-            <code>images/home-equipe.jpg</code>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p class="eyebrow">Quem constrói com você</p>
-        <h2>Responsabilidade técnica em cada decisão</h2>
-        <p class="lede" style="margin-top:18px;">Atuamos em Belo Horizonte e região com foco em obras residenciais, comerciais e industriais, sempre com engenheiro responsável acompanhando o projeto do primeiro esboço à última vistoria.</p>
-        <div class="hero-actions"><a class="btn btn-primary" href="#empresa">Conhecer a empresa</a></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-strip">
-    <div class="container cta-row">
-      <div>
-        <h2>Tem um projeto em mãos?</h2>
-        <p style="color:rgba(255,255,255,.85); margin-top:8px;">Fale com nossa equipe e receba uma avaliação técnica inicial.</p>
-      </div>
-      <a class="btn btn-on-dark" href="#contato">Falar com um engenheiro</a>
-    </div>
-  </section>
-
-  <!-- ================= EMPRESA ================= -->
-  <section id="empresa" class="section-intro">
-    <div class="container section-intro-inner">
-      <p class="eyebrow on-dark">Quem somos</p>
-      <h2>Uma equipe técnica, um único ponto de responsabilidade.</h2>
-      <p class="lede">A Coimbra Engenharia e Construções nasceu em Belo Horizonte para reunir, sob um mesmo endereço, o projeto, a execução e a fiscalização técnica de obras civis, elétricas e industriais.</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Nossa história</p>
-        <h2>Fundada em 2021, em Belo Horizonte</h2>
-        <p class="lede" style="margin-top:18px;">Registrada sob o CNAE 71.12-0-00 — Serviços de engenharia, a empresa foi constituída para atender clientes que precisam de um interlocutor técnico único: da concepção do projeto ao laudo de encerramento da obra. Atuamos com sede em Belo Horizonte e atendimento na região metropolitana.</p>
-        <p class="lede" style="margin-top:14px;">Nosso trabalho parte de um princípio simples: cada intervenção em uma estrutura — residencial, comercial ou industrial — carrega responsabilidade civil e técnica. Por isso, cada etapa é documentada, medida e assinada por profissional habilitado.</p>
-      </div>
-      <div class="split-media">
-        <div class="media-frame" style="--ar:4/3;">
-          <img src="images/sobre-historia.jpg" alt="Escritório ou fachada da Coimbra Engenharia" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-          <div class="media-placeholder">
-            <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-            <p>Foto do escritório, fachada ou obra concluída</p>
-            <code>images/sobre-historia.jpg</code>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-paperblue">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Princípios de trabalho</p>
-          <h2>O que orienta cada projeto</h2>
-        </div>
-      </div>
-      <div class="values-grid">
-        <div class="value-item reveal">
-          <span class="value-num">01</span>
-          <div><h3>Responsabilidade técnica</h3><p>Todo projeto é acompanhado por profissional habilitado, com ART/RRT recolhida antes do início da obra.</p></div>
-        </div>
-        <div class="value-item reveal">
-          <span class="value-num">02</span>
-          <div><h3>Transparência de cronograma</h3><p>Planejamento físico-financeiro compartilhado com o cliente, com marcos claros de medição.</p></div>
-        </div>
-        <div class="value-item reveal">
-          <span class="value-num">03</span>
-          <div><h3>Precisão documental</h3><p>Laudos, vistorias e pareceres técnicos redigidos com rigor — para respaldar o cliente frente a bancos, seguradoras e órgãos públicos.</p></div>
-        </div>
-        <div class="value-item reveal">
-          <span class="value-num">04</span>
-          <div><h3>Proximidade com a obra</h3><p>Presença técnica em campo, não apenas em relatório — decisões tomadas com o canteiro à vista.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Equipe técnica</p>
-          <h2>Profissionais por trás do projeto</h2>
-        </div>
-        <p class="lede">Substitua pelos nomes, cargos e fotos reais da sua equipe.</p>
-      </div>
-      <div class="team-grid">
-        <div class="team-card reveal">
-          <div class="media-frame" style="--ar:3/4;">
-            <img src="images/equipe-01.jpg" alt="Foto do(a) responsável técnico" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.4"/><path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6"/></svg>
-              <p>Foto do integrante</p><code>images/equipe-01.jpg</code>
-            </div>
-          </div>
-          <h3>Nome do(a) engenheiro(a)</h3>
-          <span>Engenheiro(a) Civil — Responsável Técnico</span>
-        </div>
-        <div class="team-card reveal">
-          <div class="media-frame" style="--ar:3/4;">
-            <img src="images/equipe-02.jpg" alt="Foto da equipe de obras" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.4"/><path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6"/></svg>
-              <p>Foto do integrante</p><code>images/equipe-02.jpg</code>
-            </div>
-          </div>
-          <h3>Nome do(a) coordenador(a)</h3>
-          <span>Coordenação de Obras</span>
-        </div>
-        <div class="team-card reveal">
-          <div class="media-frame" style="--ar:3/4;">
-            <img src="images/equipe-03.jpg" alt="Foto do time administrativo" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.4"/><path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6"/></svg>
-              <p>Foto do integrante</p><code>images/equipe-03.jpg</code>
-            </div>
-          </div>
-          <h3>Nome do(a) responsável</h3>
-          <span>Orçamentos &amp; Relacionamento</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-strip">
-    <div class="container cta-row">
-      <div>
-        <h2>Quer conhecer nosso trabalho de perto?</h2>
-        <p style="color:rgba(255,255,255,.85); margin-top:8px;">Veja projetos executados ou fale direto com nossa equipe.</p>
-      </div>
-      <div class="hero-actions" style="margin-top:0;">
-        <a class="btn btn-on-dark" href="#projetos">Ver projetos</a>
-        <a class="btn btn-on-dark" href="#contato">Contato</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= SERVIÇOS ================= -->
-  <section id="servicos" class="section-intro">
-    <div class="container section-intro-inner">
-      <p class="eyebrow on-dark">O que oferecemos</p>
-      <h2>Serviços técnicos, do projeto ao laudo.</h2>
-      <p class="lede">Atuamos nas frentes previstas pelo escopo de engenharia (CNAE 71.12-0-00): elaboração de projetos, supervisão de obras e perícia técnica, em estruturas civis, elétricas e industriais.</p>
-    </div>
-  </section>
-
-  <section id="civil">
-    <div class="container split">
-      <div>
-        <p class="eyebrow">01 — Projeto</p>
-        <h2>Engenharia Civil, Hidráulica e de Tráfego</h2>
-        <p class="lede" style="margin-top:18px;">Elaboração e gestão de projetos estruturais, hidrossanitários e de sistemas viários — da concepção ao detalhamento executivo, com memorial de cálculo e especificações técnicas.</p>
-        <ul style="margin-top:22px; display:flex; flex-direction:column; gap:10px;">
-          <li style="color:var(--ink-70); font-size:.92rem;">— Projeto estrutural e de fundações</li>
-          <li style="color:var(--ink-70); font-size:.92rem;">— Projetos hidráulicos e sanitários</li>
-          <li style="color:var(--ink-70); font-size:.92rem;">— Estudo de tráfego e acessos</li>
-        </ul>
-      </div>
-      <div class="split-media">
-        <div class="media-frame" style="--ar:4/3;">
-          <img src="images/servico-civil.jpg" alt="Projeto de engenharia civil" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-          <div class="media-placeholder">
-            <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-            <p>Foto de projeto, planta ou obra civil</p><code>images/servico-civil.jpg</code>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="supervisao" class="section-paperblue">
-    <div class="container split reverse">
-      <div class="split-media">
-        <div class="media-frame" style="--ar:4/3;">
-          <img src="images/servico-supervisao.jpg" alt="Supervisão de obra e gerenciamento de projeto" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-          <div class="media-placeholder">
-            <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-            <p>Foto de supervisão em canteiro de obras</p><code>images/servico-supervisao.jpg</code>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p class="eyebrow">02 — Execução</p>
-        <h2>Supervisão de Obras e Gerenciamento de Projetos</h2>
-        <p class="lede" style="margin-top:18px;">Controle de materiais, acompanhamento de cronograma físico-financeiro e gestão de contratos de execução — com relatórios periódicos para o cliente.</p>
-        <ul style="margin-top:22px; display:flex; flex-direction:column; gap:10px;">
-          <li style="color:var(--ink-70); font-size:.92rem;">— Fiscalização de obra e controle de qualidade</li>
-          <li style="color:var(--ink-70); font-size:.92rem;">— Gerenciamento de cronograma e medições</li>
-          <li style="color:var(--ink-70); font-size:.92rem;">— Supervisão de contratos com fornecedores</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="laudos">
-    <div class="container split">
-      <div>
-        <p class="eyebrow">03 — Diagnóstico</p>
-        <h2>Vistoria, Perícia Técnica e Laudos</h2>
-        <p class="lede" style="margin-top:18px;">Avaliação, arbitramento e parecer técnico de engenharia para compra e venda de imóveis, sinistros, financiamentos e disputas contratuais.</p>
-        <ul style="margin-top:22px; display:flex; flex-direction:column; gap:10px;">
-          <li style="color:var(--ink-70); font-size:.92rem;">— Vistoria cautelar de vizinhança</li>
-          <li style="color:var(--ink-70); font-size:.92rem;">— Laudo de avaliação de imóveis</li>
-          <li style="color:var(--ink-70); font-size:.92rem;">— Perícia técnica e parecer para processos</li>
-        </ul>
-      </div>
-      <div class="split-media">
-        <div class="media-frame" style="--ar:4/3;">
-          <img src="images/servico-laudos.jpg" alt="Vistoria técnica e laudo de engenharia" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-          <div class="media-placeholder">
-            <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-            <p>Foto de vistoria ou emissão de laudo</p><code>images/servico-laudos.jpg</code>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="industrial" class="section-paperblue">
-    <div class="container split reverse">
-      <div class="split-media">
-        <div class="media-frame" style="--ar:4/3;">
-          <img src="images/servico-industrial.jpg" alt="Engenharia elétrica, mecânica e industrial" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-          <div class="media-placeholder">
-            <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-            <p>Foto de instalação industrial ou elétrica</p><code>images/servico-industrial.jpg</code>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p class="eyebrow">04 — Especializado</p>
-        <h2>Engenharia Elétrica, Mecânica e Industrial</h2>
-        <p class="lede" style="margin-top:18px;">Concepção de instalações, maquinário e processos industriais, incluindo sistemas de segurança e engenharia de minas quando aplicável ao projeto.</p>
-        <ul style="margin-top:22px; display:flex; flex-direction:column; gap:10px;">
-          <li style="color:var(--ink-70); font-size:.92rem;">— Projetos elétricos e de automação</li>
-          <li style="color:var(--ink-70); font-size:.92rem;">— Layout de instalações industriais</li>
-          <li style="color:var(--ink-70); font-size:.92rem;">— Sistemas de segurança e prevenção</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Também atendemos</p>
-          <h2>Outras frentes técnicas</h2>
-        </div>
-      </div>
-      <div class="grid grid-2">
-        <div class="card reveal">
-          <span class="card-code">CNAE 71.12-0 / 05</span>
-          <h3>Engenharia Ambiental e Acústica</h3>
-          <p>Estudos de impacto, licenciamento ambiental e controle de ruído para empreendimentos residenciais e industriais.</p>
-        </div>
-        <div class="card reveal">
-          <span class="card-code">CNAE 71.12-0 / 06</span>
-          <h3>Concepção de Maquinário e Instalações</h3>
-          <p>Desenvolvimento de layout de processos e instalações industriais sob medida para cada operação.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-paperblue">
-    <div class="container" style="max-width:820px;">
-      <div class="section-head" style="margin-bottom:20px;">
-        <div>
-          <p class="eyebrow">Perguntas frequentes</p>
-          <h2>Antes de solicitar seu orçamento</h2>
-        </div>
-      </div>
-      <details class="faq-item" open>
-        <summary>Como funciona o orçamento inicial?</summary>
-        <p>Enviamos um formulário com as informações do projeto (tipo, localização e escopo) e retornamos com uma avaliação técnica preliminar e proposta de trabalho.</p>
-      </details>
-      <details class="faq-item">
-        <summary>A empresa emite ART/RRT?</summary>
-        <p>Sim. Cada serviço executado é acompanhado da respectiva Anotação ou Registro de Responsabilidade Técnica, conforme a natureza do projeto.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Vocês atendem fora de Belo Horizonte?</summary>
-        <p>Atendemos a região metropolitana de Belo Horizonte; para outras localidades, consulte disponibilidade diretamente com nossa equipe.</p>
-      </details>
-      <details class="faq-item">
-        <summary>É possível contratar apenas a vistoria ou o laudo?</summary>
-        <p>Sim, os serviços de vistoria, perícia e laudo técnico podem ser contratados de forma avulsa, sem necessidade de projeto completo.</p>
-      </details>
-    </div>
-  </section>
-
-  <section class="cta-strip">
-    <div class="container cta-row">
-      <div>
-        <h2>Pronto para começar seu projeto?</h2>
-        <p style="color:rgba(255,255,255,.85); margin-top:8px;">Conte o que você precisa e retornamos com os próximos passos.</p>
-      </div>
-      <a class="btn btn-on-dark" href="#contato">Solicitar orçamento</a>
-    </div>
-  </section>
-
-  <!-- ================= PROJETOS ================= -->
-  <section id="projetos" class="section-intro">
-    <div class="container section-intro-inner">
-      <p class="eyebrow on-dark">Portfólio</p>
-      <h2>Projetos que saíram do papel.</h2>
-      <p class="lede">Uma amostra do tipo de trabalho que conduzimos — substitua pelas fotos e descrições reais das suas obras entregues.</p>
-    </div>
-  </section>
-
-  <section class="section-tight">
-    <div class="container">
-      <div class="filters" role="tablist" aria-label="Filtrar projetos por categoria">
-        <button class="filter-tag is-active" data-filter="todos">Todos</button>
-        <button class="filter-tag" data-filter="residencial">Residencial</button>
-        <button class="filter-tag" data-filter="comercial">Comercial</button>
-        <button class="filter-tag" data-filter="industrial">Industrial</button>
-        <button class="filter-tag" data-filter="reforma">Reforma &amp; Laudo</button>
-      </div>
-
-      <div class="projects-grid">
-        <div class="project-card reveal" data-category="residencial">
-          <div class="media-frame" style="--ar:4/3;">
-            <img src="images/projeto-residencial-01.jpg" alt="Projeto residencial" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-              <p>Foto do projeto residencial</p><code>images/projeto-residencial-01.jpg</code>
-            </div>
-          </div>
-          <span class="p-tag">Residencial</span>
-          <h3>Nome do projeto ou bairro</h3>
-          <p>Breve descrição do escopo: metragem, tipo de obra e serviço prestado.</p>
-        </div>
-
-        <div class="project-card reveal" data-category="comercial">
-          <div class="media-frame" style="--ar:4/3;">
-            <img src="images/projeto-comercial-01.jpg" alt="Projeto comercial" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-              <p>Foto do projeto comercial</p><code>images/projeto-comercial-01.jpg</code>
-            </div>
-          </div>
-          <span class="p-tag">Comercial</span>
-          <h3>Nome do projeto ou bairro</h3>
-          <p>Breve descrição do escopo: metragem, tipo de obra e serviço prestado.</p>
-        </div>
-
-        <div class="project-card reveal" data-category="industrial">
-          <div class="media-frame" style="--ar:4/3;">
-            <img src="images/projeto-industrial-01.jpg" alt="Projeto industrial" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-              <p>Foto do projeto industrial</p><code>images/projeto-industrial-01.jpg</code>
-            </div>
-          </div>
-          <span class="p-tag">Industrial</span>
-          <h3>Nome do projeto ou cliente</h3>
-          <p>Breve descrição do escopo: metragem, tipo de obra e serviço prestado.</p>
-        </div>
-
-        <div class="project-card reveal" data-category="reforma">
-          <div class="media-frame" style="--ar:4/3;">
-            <img src="images/projeto-reforma-01.jpg" alt="Reforma ou laudo técnico" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-              <p>Foto da reforma ou vistoria</p><code>images/projeto-reforma-01.jpg</code>
-            </div>
-          </div>
-          <span class="p-tag">Reforma &amp; Laudo</span>
-          <h3>Nome do projeto ou bairro</h3>
-          <p>Breve descrição do escopo: metragem, tipo de obra e serviço prestado.</p>
-        </div>
-
-        <div class="project-card reveal" data-category="residencial">
-          <div class="media-frame" style="--ar:4/3;">
-            <img src="images/projeto-residencial-02.jpg" alt="Projeto residencial" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-              <p>Foto do projeto residencial</p><code>images/projeto-residencial-02.jpg</code>
-            </div>
-          </div>
-          <span class="p-tag">Residencial</span>
-          <h3>Nome do projeto ou bairro</h3>
-          <p>Breve descrição do escopo: metragem, tipo de obra e serviço prestado.</p>
-        </div>
-
-        <div class="project-card reveal" data-category="comercial">
-          <div class="media-frame" style="--ar:4/3;">
-            <img src="images/projeto-comercial-02.jpg" alt="Projeto comercial" onerror="this.onerror=null; this.closest('.media-frame').classList.add('is-empty')">
-            <div class="media-placeholder">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 15l5-5 4 4 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg>
-              <p>Foto do projeto comercial</p><code>images/projeto-comercial-02.jpg</code>
-            </div>
-          </div>
-          <span class="p-tag">Comercial</span>
-          <h3>Nome do projeto ou bairro</h3>
-          <p>Breve descrição do escopo: metragem, tipo de obra e serviço prestado.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-strip">
-    <div class="container cta-row">
-      <div>
-        <h2>Seu projeto pode ser o próximo aqui.</h2>
-        <p style="color:rgba(255,255,255,.85); margin-top:8px;">Traga sua ideia — cuidamos da parte técnica.</p>
-      </div>
-      <a class="btn btn-on-dark" href="#contato">Solicitar orçamento</a>
-    </div>
-  </section>
-
-  <!-- ================= CONTATO ================= -->
-  <section id="contato" class="section-intro">
-    <div class="container section-intro-inner">
-      <p class="eyebrow on-dark">Fale conosco</p>
-      <h2>Vamos falar sobre o seu projeto.</h2>
-      <p class="lede">Envie os detalhes da obra ou fale diretamente pelo telefone e Instagram. Retornamos com os próximos passos técnicos.</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="container contact-grid">
-      <div>
-        <p class="eyebrow">Informações</p>
-        <h2>Coimbra Engenharia e Construções LTDA</h2>
-
-        <div class="info-list">
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
-            <div>
-              <h3>Endereço</h3>
-              <a href="https://www.google.com/maps/search/?api=1&query=Rua+David+Fonseca%2C+1231+-+Milion%C3%A1rios%2C+Belo+Horizonte+-+MG%2C+30620-230" target="_blank" rel="noopener">
-                Rua David Fonseca, 1231 — Milionários,<br>Belo Horizonte - MG, 30620-230
-              </a>
-            </div>
-          </div>
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
-            <div><h3>Telefone / WhatsApp</h3><a href="tel:+5531986674654">(31) 98667-4654</a></div>
-          </div>
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
-            <div><h3>Instagram</h3><a href="https://www.instagram.com/coimbraengeeconstrucoes/" target="_blank" rel="noopener">@coimbraengeeconstrucoes</a></div>
-          </div>
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-            <div><h3>Atendimento</h3><p>Segunda a sexta, das 8h às 18h</p></div>
-          </div>
-        </div>
-
-        <div class="map-frame" style="margin-top:36px;">
-          <iframe
-            src="https://www.google.com/maps?q=Rua+David+Fonseca,+1231+-+Milion%C3%A1rios,+Belo+Horizonte+-+MG,+30620-230&output=embed"
-            title="Mapa — Rua David Fonseca, 1231, Milionários, Belo Horizonte"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
-      </div>
-
-      <div>
-        <p class="eyebrow">Orçamento</p>
-        <h2>Conte os detalhes do seu projeto</h2>
-        <p class="lede" style="margin-top:14px; margin-bottom:28px;">Quanto mais informação, mais rápido retornamos com uma avaliação técnica.</p>
-
-        <form class="contact-form" action="#" method="post">
-          <div class="form-row">
-            <div class="field"><label for="nome">Nome completo</label><input type="text" id="nome" name="nome" required autocomplete="name"></div>
-            <div class="field"><label for="telefone">Telefone / WhatsApp</label><input type="tel" id="telefone" name="telefone" required autocomplete="tel"></div>
-          </div>
-          <div class="field"><label for="email">E-mail</label><input type="email" id="email" name="email" required autocomplete="email"></div>
-          <div class="form-row">
-            <div class="field">
-              <label for="tipo">Tipo de projeto</label>
-              <select id="tipo" name="tipo">
-                <option>Residencial</option><option>Comercial</option><option>Industrial</option><option>Vistoria / Laudo</option><option>Outro</option>
-              </select>
-            </div>
-            <div class="field"><label for="bairro">Cidade / Bairro da obra</label><input type="text" id="bairro" name="bairro"></div>
-          </div>
-          <div class="field"><label for="mensagem">Descreva o projeto</label><textarea id="mensagem" name="mensagem" required placeholder="Metragem, escopo, prazo desejado..."></textarea></div>
-          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">
-            Enviar solicitação
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-          <p class="form-note form-status">Preencha os campos acima e envie — nossa equipe retorna em até 1 dia útil.</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="brand" href="#inicio">
-          <img class="brand-logo" src="images/logo-white.png" alt="Coimbra Engenharia e Construções">
-        </a>
-        <p>Engenharia civil, supervisão de obras e laudos técnicos em Belo Horizonte, MG.</p>
-      </div>
-      <div class="footer-col">
-        <h3>Navegação</h3>
-        <ul>
-          <li><a href="#inicio">Início</a></li>
-          <li><a href="#empresa">Empresa</a></li>
-          <li><a href="#servicos">Serviços</a></li>
-          <li><a href="#projetos">Projetos</a></li>
-          <li><a href="#contato">Contato</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h3>Serviços</h3>
-        <ul>
-          <li><a href="#civil">Engenharia civil</a></li>
-          <li><a href="#supervisao">Supervisão de obras</a></li>
-          <li><a href="#laudos">Vistorias e laudos</a></li>
-          <li><a href="#industrial">Engenharia industrial</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h3>Contato</h3>
-        <ul>
-          <li><a href="https://www.google.com/maps/search/?api=1&query=Rua+David+Fonseca%2C+1231+-+Milion%C3%A1rios%2C+Belo+Horizonte+-+MG%2C+30620-230" target="_blank" rel="noopener">Rua David Fonseca, 1231 — Milionários, Belo Horizonte/MG</a></li>
-          <li><a href="tel:+5531986674654">(31) 98667-4654</a></li>
-          <li><a href="https://www.instagram.com/coimbraengeeconstrucoes/" target="_blank" rel="noopener">@coimbraengeeconstrucoes</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© <span id="year"></span> Coimbra Engenharia e Construções LTDA</span>
-      <a href="https://www.instagram.com/coimbraengeeconstrucoes/" target="_blank" rel="noopener">Instagram ↗</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-(function(){
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Menu mobile
-  var toggle = document.querySelector('.nav-toggle');
-  var links = document.querySelector('.nav-links');
-  if(toggle && links){
-    toggle.addEventListener('click', function(){
-      var open = links.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    links.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){ links.classList.remove('is-open'); });
-    });
-  }
-
-  // Revelação suave ao rolar
-  var reveals = document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window && reveals.length){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    reveals.forEach(function(el){ io.observe(el); });
-  } else {
-    reveals.forEach(function(el){ el.classList.add('is-visible'); });
-  }
-
-  // Filtros de projetos
-  var filterButtons = document.querySelectorAll('.filter-tag');
-  var projectCards = document.querySelectorAll('.project-card');
-  if(filterButtons.length && projectCards.length){
-    filterButtons.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        filterButtons.forEach(function(b){ b.classList.remove('is-active'); });
-        btn.classList.add('is-active');
-        var filter = btn.getAttribute('data-filter');
-        projectCards.forEach(function(card){
-          var cat = card.getAttribute('data-category');
-          card.style.display = (filter === 'todos' || filter === cat) ? '' : 'none';
-        });
-      });
-    });
-  }
-
-  // Formulário de contato (demonstrativo — sem backend)
-  var form = document.querySelector('.contact-form');
-  if(form){
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var noteEl = form.querySelector('.form-status');
-      if(noteEl){
-        noteEl.textContent = 'Mensagem pronta para envio. Configure um backend ou serviço de formulário (ex.: Formspree) para receber os contatos por e-mail.';
+      :root {
+        --blue: #007aad;
+        --blue-ink: #005d85;
+        --paper-blue: #d9e2e9;
+        --paper: #fffbfc;
+        --navy: #0c1d32;
+
+        --ink: var(--navy);
+        --ink-70: rgba(12, 29, 50, 0.72);
+        --ink-45: rgba(12, 29, 50, 0.45);
+        --line: rgba(12, 29, 50, 0.14);
+        --line-soft: rgba(12, 29, 50, 0.08);
+        --paper-blue-line: rgba(12, 29, 50, 0.16);
+
+        --display: "Space Grotesk", "IBM Plex Sans", sans-serif;
+        --body: "IBM Plex Sans", "Segoe UI", sans-serif;
+        --mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+
+        --container: 1180px;
+        --radius: 2px;
+        --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
       }
-    });
-  }
 
-  // Scrollspy — destaca o item de menu correspondente à seção visível
-  var navLinks = document.querySelectorAll('#nav-links a[data-nav]');
-  var sections = ['inicio','empresa','servicos','projetos','contato']
-    .map(function(id){ return document.getElementById(id); })
-    .filter(Boolean);
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
 
-  if('IntersectionObserver' in window && sections.length && navLinks.length){
-    var spy = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          var id = entry.target.id;
-          navLinks.forEach(function(link){
-            if(link.getAttribute('data-nav') === id){
-              link.setAttribute('aria-current','page');
-            } else {
-              link.removeAttribute('aria-current');
+      body {
+        margin: 0;
+        font-family: var(--body);
+        color: var(--ink);
+        background: var(--paper);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.55;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      button {
+        font-family: inherit;
+      }
+
+      .container {
+        max-width: var(--container);
+        margin-inline: auto;
+        padding-inline: 24px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--display);
+        color: var(--navy);
+        margin: 0;
+        letter-spacing: -0.01em;
+        line-height: 1.05;
+      }
+      h1 {
+        font-size: clamp(2.4rem, 5vw + 1rem, 4.4rem);
+        font-weight: 600;
+      }
+      h2 {
+        font-size: clamp(1.7rem, 3vw + 1rem, 2.7rem);
+        font-weight: 600;
+      }
+      h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--blue);
+        font-weight: 500;
+        margin-bottom: 14px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 22px;
+        height: 1px;
+        background: var(--blue);
+        display: inline-block;
+      }
+      .eyebrow.on-dark {
+        color: #7fcbeb;
+      }
+      .eyebrow.on-dark::before {
+        background: #7fcbeb;
+      }
+
+      .lede {
+        font-size: 1.08rem;
+        color: var(--ink-70);
+        max-width: 56ch;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: 0;
+        background: var(--navy);
+        color: #fff;
+        padding: 10px 16px;
+        z-index: 999;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+      }
+      .skip-link:focus {
+        left: 16px;
+        top: 16px;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      /* HEADER / NAV */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--navy);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-block: 14px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #fff;
+      }
+      .brand-logo {
+        height: 36px;
+        width: auto;
+        display: block;
+      }
+      @media (max-width: 480px) {
+        .brand-logo {
+          height: 30px;
+        }
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .nav-links a {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.9rem;
+        padding: 10px 16px;
+        border-bottom: 2px solid transparent;
+        transition:
+          color 0.18s var(--ease),
+          border-color 0.18s var(--ease);
+      }
+      .nav-links a:hover {
+        color: #fff;
+      }
+      .nav-links a[aria-current="page"] {
+        color: #fff;
+        border-bottom-color: var(--blue);
+      }
+      .nav-cta {
+        margin-left: 8px;
+        background: var(--blue);
+        color: #fff !important;
+        padding: 10px 18px !important;
+        border-radius: var(--radius);
+        border-bottom: none !important;
+      }
+      .nav-cta:hover {
+        background: var(--blue-ink);
+      }
+
+      .nav-toggle {
+        display: none;
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #fff;
+        width: 42px;
+        height: 38px;
+        border-radius: 2px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-toggle svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      @media (max-width: 880px) {
+        .nav-toggle {
+          display: flex;
+        }
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--navy);
+          flex-direction: column;
+          align-items: stretch;
+          padding: 8px 24px 18px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          display: none;
+        }
+        .nav-links.is-open {
+          display: flex;
+        }
+        .nav-links a {
+          padding: 12px 4px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .nav-cta {
+          margin-left: 0;
+          margin-top: 10px;
+          text-align: center;
+        }
+      }
+
+      /* MEDIA FRAME */
+      .media-frame {
+        position: relative;
+        background: var(--paper-blue);
+        overflow: hidden;
+        aspect-ratio: var(--ar, 4/3);
+      }
+      .media-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .media-frame::before,
+      .media-frame::after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .media-frame::before {
+        top: 10px;
+        left: 10px;
+        border-top: 2px solid var(--navy);
+        border-left: 2px solid var(--navy);
+        opacity: 0.55;
+      }
+      .media-frame::after {
+        bottom: 10px;
+        right: 10px;
+        border-bottom: 2px solid var(--navy);
+        border-right: 2px solid var(--navy);
+        opacity: 0.55;
+      }
+      .media-placeholder {
+        display: none;
+        position: absolute;
+        inset: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-align: center;
+        padding: 20px;
+        background:
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 23px,
+            var(--paper-blue-line) 23px,
+            var(--paper-blue-line) 24px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 23px,
+            var(--paper-blue-line) 23px,
+            var(--paper-blue-line) 24px
+          ),
+          var(--paper-blue);
+      }
+      .media-frame.is-empty img {
+        display: none;
+      }
+      .media-frame.is-empty .media-placeholder {
+        display: flex;
+      }
+      .ph-icon {
+        width: 34px;
+        height: 34px;
+        color: var(--blue);
+        opacity: 0.8;
+      }
+      .media-placeholder p {
+        margin: 0;
+        font-size: 0.82rem;
+        color: var(--ink-70);
+        max-width: 26ch;
+      }
+      .media-placeholder code {
+        display: inline-block;
+        margin-top: 6px;
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid var(--line);
+        padding: 3px 8px;
+        color: var(--navy);
+      }
+      .media-caption {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        z-index: 3;
+        font-family: var(--mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.05em;
+        color: #fff;
+        background: rgba(12, 29, 50, 0.72);
+        padding: 4px 8px;
+      }
+
+      /* HERO */
+      .hero {
+        position: relative;
+        padding-block: 64px 88px;
+        background: linear-gradient(
+          180deg,
+          var(--paper) 0%,
+          var(--paper) 70%,
+          var(--paper-blue) 100%
+        );
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--line-soft) 1px, transparent 1px),
+          linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse 90% 60% at 30% 20%,
+          black 40%,
+          transparent 78%
+        );
+        pointer-events: none;
+      }
+      .hero-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .hero-copy h1 {
+        margin-bottom: 20px;
+      }
+      .hero-copy h1 em {
+        font-style: normal;
+        color: var(--blue);
+      }
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 32px;
+        flex-wrap: wrap;
+      }
+      .hero-media {
+        position: relative;
+      }
+      .hero-media .media-frame {
+        --ar: 1/1;
+        box-shadow: 0 30px 60px -30px rgba(12, 29, 50, 0.35);
+      }
+      .hero-stats {
+        position: relative;
+        display: flex;
+        gap: 0;
+        margin-top: 46px;
+        border-top: 1px solid var(--line);
+        padding-top: 22px;
+        flex-wrap: wrap;
+      }
+      .hero-stats div {
+        padding-right: 34px;
+        margin-right: 34px;
+        border-right: 1px solid var(--line);
+      }
+      .hero-stats div:last-child {
+        border-right: none;
+      }
+      .hero-stats strong {
+        display: block;
+        font-family: var(--display);
+        font-size: 1.7rem;
+        color: var(--navy);
+      }
+      .hero-stats span {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-45);
+      }
+      @media (max-width: 900px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-media {
+          order: -1;
+          max-width: 420px;
+        }
+      }
+
+      /* BOTÕES */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--body);
+        font-weight: 600;
+        font-size: 0.92rem;
+        padding: 13px 24px;
+        border-radius: var(--radius);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition:
+          transform 0.15s var(--ease),
+          background 0.18s var(--ease),
+          color 0.18s var(--ease),
+          border-color 0.18s var(--ease);
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .btn-primary {
+        background: var(--blue);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--blue-ink);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--navy);
+        border-color: var(--line);
+      }
+      .btn-ghost:hover {
+        border-color: var(--navy);
+      }
+      .btn-on-dark {
+        background: transparent;
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+      .btn-on-dark:hover {
+        border-color: #fff;
+      }
+      .btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* SEÇÕES */
+      section {
+        padding-block: 88px;
+      }
+      .section-tight {
+        padding-block: 64px;
+      }
+      .section-paperblue {
+        background: var(--paper-blue);
+      }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 40px;
+        margin-bottom: 52px;
+        flex-wrap: wrap;
+      }
+      .section-head .lede {
+        margin-top: 14px;
+      }
+
+      /* CARDS */
+      .grid {
+        display: grid;
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 900px) {
+        .grid-3 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .grid-3,
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      .card {
+        background: var(--paper);
+        padding: 34px 28px;
+        position: relative;
+      }
+      .card-code {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--blue);
+        letter-spacing: 0.06em;
+        display: block;
+        margin-bottom: 18px;
+      }
+      .card h3 {
+        margin-bottom: 10px;
+      }
+      .card p {
+        color: var(--ink-70);
+        font-size: 0.94rem;
+        margin: 0;
+      }
+      .card-icon {
+        width: 34px;
+        height: 34px;
+        color: var(--blue);
+        margin-bottom: 18px;
+      }
+
+      /* PROCESSO */
+      .process {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+      .process::before {
+        content: "";
+        position: absolute;
+        top: 17px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--line);
+      }
+      @media (max-width: 800px) {
+        .process {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .process::before {
+          display: none;
+        }
+      }
+      .process-step {
+        position: relative;
+        padding-right: 20px;
+      }
+      .process-step .stage {
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--navy);
+        background: var(--paper);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--navy);
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+      }
+      .process-step h3 {
+        margin-bottom: 8px;
+        font-size: 1.02rem;
+      }
+      .process-step p {
+        color: var(--ink-70);
+        font-size: 0.9rem;
+        margin: 0;
+      }
+
+      /* PROJETOS */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+      }
+      @media (max-width: 900px) {
+        .projects-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 600px) {
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .project-card .media-frame {
+        --ar: 4/3;
+        margin-bottom: 16px;
+      }
+      .project-card .p-tag {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--blue);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .project-card h3 {
+        margin-top: 6px;
+        margin-bottom: 4px;
+        font-size: 1.05rem;
+      }
+      .project-card p {
+        color: var(--ink-70);
+        font-size: 0.88rem;
+        margin: 0;
+      }
+      .filters {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+      }
+      .filter-tag {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 8px 14px;
+        border: 1px solid var(--line);
+        color: var(--ink-70);
+        background: var(--paper);
+        cursor: pointer;
+      }
+      .filter-tag.is-active {
+        border-color: var(--navy);
+        background: var(--navy);
+        color: #fff;
+      }
+
+      /* CTA */
+      .cta-strip {
+        background: var(--blue);
+        color: #fff;
+        padding-block: 56px;
+      }
+      .cta-strip h2 {
+        color: #fff;
+      }
+      .cta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+
+      /* VALORES / SOBRE */
+      .values-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 34px 44px;
+      }
+      @media (max-width: 700px) {
+        .values-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .value-item {
+        display: flex;
+        gap: 18px;
+      }
+      .value-num {
+        font-family: var(--mono);
+        color: var(--blue);
+        font-size: 0.85rem;
+        padding-top: 2px;
+      }
+      .value-item h3 {
+        margin-bottom: 6px;
+      }
+      .value-item p {
+        color: var(--ink-70);
+        font-size: 0.92rem;
+        margin: 0;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .split {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+      }
+      .split.reverse .split-media {
+        order: 2;
+      }
+      @media (max-width: 900px) {
+        .split.reverse .split-media {
+          order: -1;
+        }
+      }
+
+      /* EQUIPE */
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+      @media (max-width: 800px) {
+        .team-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 520px) {
+        .team-grid {
+          grid-template-columns: 1fr;
+          max-width: 320px;
+          margin-inline: auto;
+        }
+      }
+      .team-card .media-frame {
+        --ar: 3/4;
+        margin-bottom: 14px;
+      }
+      .team-card h3 {
+        font-size: 1rem;
+        margin-bottom: 2px;
+      }
+      .team-card span {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--blue);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      /* CONTATO */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+      }
+      @media (max-width: 900px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .info-list {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .info-item {
+        display: flex;
+        gap: 16px;
+      }
+      .info-item svg {
+        width: 22px;
+        height: 22px;
+        color: var(--blue);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .info-item h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--ink-45);
+        font-family: var(--mono);
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+      .info-item p,
+      .info-item a {
+        font-size: 1rem;
+        color: var(--navy);
+      }
+      .info-item a:hover {
+        color: var(--blue);
+      }
+      .map-frame {
+        border: 1px solid var(--line);
+        overflow: hidden;
+        aspect-ratio: 4/3;
+        background: var(--paper-blue);
+      }
+      .map-frame iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        filter: grayscale(0.15) contrast(1.02);
+      }
+      form.contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      @media (max-width: 520px) {
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .field label {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-45);
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        font-family: var(--body);
+        font-size: 0.95rem;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        color: var(--navy);
+        border-radius: var(--radius);
+      }
+      .field textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        outline: none;
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(0, 122, 173, 0.15);
+      }
+      .form-note {
+        font-size: 0.78rem;
+        color: var(--ink-45);
+      }
+
+      /* FAQ */
+      .faq-item {
+        border-bottom: 1px solid var(--line);
+        padding-block: 22px;
+      }
+      .faq-item summary {
+        cursor: pointer;
+        font-family: var(--display);
+        font-size: 1.05rem;
+        color: var(--navy);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+      }
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq-item summary::after {
+        content: "+";
+        font-family: var(--mono);
+        color: var(--blue);
+        font-size: 1.3rem;
+      }
+      .faq-item[open] summary::after {
+        content: "–";
+      }
+      .faq-item p {
+        color: var(--ink-70);
+        margin-top: 14px;
+        max-width: 70ch;
+      }
+
+      /* INTRO DE SEÇÃO (era "page-hero") */
+      .section-intro {
+        padding-block: 56px 60px;
+        background: var(--navy);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+      .section-intro::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse 80% 100% at 15% 0%,
+          black 30%,
+          transparent 75%
+        );
+      }
+      .section-intro-inner {
+        position: relative;
+        max-width: 760px;
+      }
+      .section-intro h2 {
+        color: #fff;
+        margin-bottom: 16px;
+      }
+      .section-intro .lede {
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      /* FOOTER */
+      .site-footer {
+        background: var(--navy);
+        color: rgba(255, 255, 255, 0.7);
+        padding-block: 64px 28px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: 40px;
+        padding-bottom: 44px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      @media (max-width: 800px) {
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 480px) {
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .footer-brand .brand {
+        margin-bottom: 16px;
+      }
+      .footer-brand .brand-logo {
+        height: 42px;
+      }
+      .footer-brand p {
+        font-size: 0.88rem;
+        max-width: 32ch;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .footer-col h3 {
+        color: #fff;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        font-weight: 500;
+      }
+      .footer-col ul {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+      }
+      .footer-col a {
+        font-size: 0.9rem;
+      }
+      .footer-col a:hover {
+        color: #fff;
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding-top: 24px;
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: var(--mono);
+      }
+      .footer-bottom a:hover {
+        color: #fff;
+      }
+
+      /* Reveal on scroll */
+      .reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.6s var(--ease),
+          transform 0.6s var(--ease);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* âncora não fica escondida atrás do header fixo */
+      main [id] {
+        scroll-margin-top: 76px;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#inicio">
+          <img
+            class="brand-logo"
+            src="images/logo-white.png"
+            alt="Coimbra Engenharia e Construções"
+          />
+        </a>
+        <nav aria-label="Navegação principal">
+          <ul class="nav-links" id="nav-links">
+            <li><a href="#inicio" data-nav="inicio">Início</a></li>
+            <li><a href="#empresa" data-nav="empresa">Empresa</a></li>
+            <li><a href="#servicos" data-nav="servicos">Serviços</a></li>
+            <li><a href="#projetos" data-nav="projetos">Projetos</a></li>
+            <li><a href="#contato" data-nav="contato">Contato</a></li>
+            <li><a class="nav-cta" href="#contato">Solicitar orçamento</a></li>
+          </ul>
+        </nav>
+        <button
+          class="nav-toggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="nav-links"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M3 6h18M3 12h18M3 18h18" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="conteudo">
+      <!-- ================= INÍCIO ================= -->
+      <section id="inicio" class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Belo Horizonte · MG — desde 2021</p>
+            <h1>Engenharia que sustenta <em>cada etapa</em> da sua obra.</h1>
+            <p class="lede">
+              A Coimbra Engenharia e Construções reúne projeto, supervisão e
+              gerenciamento técnico em um único acompanhamento — do estudo
+              inicial à entrega, com laudos e responsabilidade técnica em cada
+              decisão.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#contato">
+                Solicitar orçamento
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+              <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
+            </div>
+            <div class="hero-stats">
+              <div><strong>2021</strong><span>Fundação da empresa</span></div>
+              <div>
+                <strong>M-7112-0</strong
+                ><span>Serviços de engenharia — CNAE</span>
+              </div>
+              <div>
+                <strong>BH &amp; RMBH</strong><span>Área de atuação</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-media">
+            <div class="media-frame" style="--ar: 1/1">
+              <img
+                src="images/capacete.jpg"
+                alt="Obra ou equipe da Coimbra Engenharia em atividade"
+                onerror="
+                  this.onerror = null;
+                  this.closest('.media-frame').classList.add('is-empty');
+                "
+              />
+              <div class="media-placeholder">
+                <svg
+                  class="ph-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="1" />
+                  <path d="M3 15l5-5 4 4 4-5 5 6" />
+                  <circle cx="8" cy="9" r="1.4" />
+                </svg>
+                <p>Coloque a foto principal aqui</p>
+                <code>images/home-hero.jpg</code>
+              </div>
+              <span class="media-caption">Obra em andamento — BH/MG</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">O que fazemos</p>
+              <h2>Serviços técnicos de ponta a ponta</h2>
+            </div>
+            <p class="lede">
+              Cobrimos as frentes que uma obra exige para sair do papel com
+              segurança jurídica e técnica.
+            </p>
+          </div>
+
+          <div class="grid grid-3">
+            <div class="card reveal">
+              <span class="card-code">CNAE 71.12-0 / 01</span>
+              <svg
+                class="card-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6" />
+              </svg>
+              <h3>Engenharia Civil, Hidráulica e de Tráfego</h3>
+              <p>
+                Elaboração e gestão de projetos estruturais, hidráulicos e
+                viários, do estudo preliminar à execução.
+              </p>
+            </div>
+            <div class="card reveal">
+              <span class="card-code">CNAE 71.12-0 / 02</span>
+              <svg
+                class="card-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M4 21V8l8-5 8 5v13M9 21v-7h6v7" />
+                <path d="M4 12h16" />
+              </svg>
+              <h3>Supervisão de Obras e Gerenciamento</h3>
+              <p>
+                Controle de materiais, cronograma físico-financeiro e
+                gerenciamento de contratos de execução.
+              </p>
+            </div>
+            <div class="card reveal">
+              <span class="card-code">CNAE 71.12-0 / 03</span>
+              <svg
+                class="card-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="9" />
+              </svg>
+              <h3>Vistoria, Perícia e Laudos Técnicos</h3>
+              <p>
+                Avaliação, arbitramento e parecer técnico de engenharia para
+                imóveis, obras e sinistros.
+              </p>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 44px">
+            <a class="btn btn-ghost" href="#servicos"
+              >Conhecer todos os serviços</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section-paperblue">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Como conduzimos</p>
+              <h2>Um método, do esquadro ao habite-se</h2>
+            </div>
+          </div>
+          <div class="process">
+            <div class="process-step reveal">
+              <span class="stage">01</span>
+              <h3>Diagnóstico e projeto</h3>
+              <p>
+                Levantamento técnico, viabilidade e desenvolvimento do projeto
+                executivo.
+              </p>
+            </div>
+            <div class="process-step reveal">
+              <span class="stage">02</span>
+              <h3>Planejamento</h3>
+              <p>
+                Cronograma, orçamento e definição de responsabilidades técnicas
+                (ART/RRT).
+              </p>
+            </div>
+            <div class="process-step reveal">
+              <span class="stage">03</span>
+              <h3>Execução e supervisão</h3>
+              <p>
+                Acompanhamento de campo, controle de qualidade e gestão de
+                fornecedores.
+              </p>
+            </div>
+            <div class="process-step reveal">
+              <span class="stage">04</span>
+              <h3>Entrega e laudo</h3>
+              <p>
+                Vistoria final, documentação técnica e encerramento formal da
+                obra.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container split">
+          <div class="split-media">
+            <div class="media-frame" style="--ar: 4/3">
+              <img
+                src="images/equipe.jpg"
+                alt="Equipe técnica da Coimbra Engenharia"
+                onerror="
+                  this.onerror = null;
+                  this.closest('.media-frame').classList.add('is-empty');
+                "
+              />
+              <div class="media-placeholder">
+                <svg
+                  class="ph-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="1" />
+                  <path d="M3 15l5-5 4 4 4-5 5 6" />
+                  <circle cx="8" cy="9" r="1.4" />
+                </svg>
+                <p>Foto da equipe em campo ou no escritório</p>
+                <code>images/home-equipe.jpg</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="eyebrow">Quem constrói com você</p>
+            <h2>Responsabilidade técnica em cada decisão</h2>
+            <p class="lede" style="margin-top: 18px">
+              Atuamos em Belo Horizonte e região com foco em obras residenciais,
+              comerciais e industriais, sempre com engenheiro responsável
+              acompanhando o projeto do primeiro esboço à última vistoria.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#empresa">Conhecer a empresa</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-strip">
+        <div class="container cta-row">
+          <div>
+            <h2>Tem um projeto em mãos?</h2>
+            <p style="color: rgba(255, 255, 255, 0.85); margin-top: 8px">
+              Fale com nossa equipe e receba uma avaliação técnica inicial.
+            </p>
+          </div>
+          <a class="btn btn-on-dark" href="#contato">Falar com um engenheiro</a>
+        </div>
+      </section>
+
+      <!-- ================= EMPRESA ================= -->
+      <section id="empresa" class="section-intro">
+        <div class="container section-intro-inner">
+          <p class="eyebrow on-dark">Quem somos</p>
+          <h2>Uma equipe técnica, um único ponto de responsabilidade.</h2>
+          <p class="lede">
+            A Coimbra Engenharia e Construções nasceu em Belo Horizonte para
+            reunir, sob um mesmo endereço, o projeto, a execução e a
+            fiscalização técnica de obras civis, elétricas e industriais.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div class="container split">
+          <div>
+            <p class="eyebrow">Nossa história</p>
+            <h2>Fundada em 2021, em Belo Horizonte</h2>
+            <p class="lede" style="margin-top: 18px">
+              Registrada sob o CNAE 71.12-0-00 — Serviços de engenharia, a
+              empresa foi constituída para atender clientes que precisam de um
+              interlocutor técnico único: da concepção do projeto ao laudo de
+              encerramento da obra. Atuamos com sede em Belo Horizonte e
+              atendimento na região metropolitana.
+            </p>
+            <p class="lede" style="margin-top: 14px">
+              Nosso trabalho parte de um princípio simples: cada intervenção em
+              uma estrutura — residencial, comercial ou industrial — carrega
+              responsabilidade civil e técnica. Por isso, cada etapa é
+              documentada, medida e assinada por profissional habilitado.
+            </p>
+          </div>
+          <div class="split-media">
+            <div class="media-frame" style="--ar: 4/3">
+              <img
+                src="images/sobre-historia.jpg"
+                alt="Escritório ou fachada da Coimbra Engenharia"
+                onerror="
+                  this.onerror = null;
+                  this.closest('.media-frame').classList.add('is-empty');
+                "
+              />
+              <div class="media-placeholder">
+                <svg
+                  class="ph-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="1" />
+                  <path d="M3 15l5-5 4 4 4-5 5 6" />
+                  <circle cx="8" cy="9" r="1.4" />
+                </svg>
+                <p>Foto do escritório, fachada ou obra concluída</p>
+                <code>images/sobre-historia.jpg</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-paperblue">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Princípios de trabalho</p>
+              <h2>O que orienta cada projeto</h2>
+            </div>
+          </div>
+          <div class="values-grid">
+            <div class="value-item reveal">
+              <span class="value-num">01</span>
+              <div>
+                <h3>Responsabilidade técnica</h3>
+                <p>
+                  Todo projeto é acompanhado por profissional habilitado, com
+                  ART/RRT recolhida antes do início da obra.
+                </p>
+              </div>
+            </div>
+            <div class="value-item reveal">
+              <span class="value-num">02</span>
+              <div>
+                <h3>Transparência de cronograma</h3>
+                <p>
+                  Planejamento físico-financeiro compartilhado com o cliente,
+                  com marcos claros de medição.
+                </p>
+              </div>
+            </div>
+            <div class="value-item reveal">
+              <span class="value-num">03</span>
+              <div>
+                <h3>Precisão documental</h3>
+                <p>
+                  Laudos, vistorias e pareceres técnicos redigidos com rigor —
+                  para respaldar o cliente frente a bancos, seguradoras e órgãos
+                  públicos.
+                </p>
+              </div>
+            </div>
+            <div class="value-item reveal">
+              <span class="value-num">04</span>
+              <div>
+                <h3>Proximidade com a obra</h3>
+                <p>
+                  Presença técnica em campo, não apenas em relatório — decisões
+                  tomadas com o canteiro à vista.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Equipe técnica</p>
+              <h2>Profissionais por trás do projeto</h2>
+            </div>
+            <p class="lede">
+              Substitua pelos nomes, cargos e fotos reais da sua equipe.
+            </p>
+          </div>
+          <div class="team-grid">
+            <div class="team-card reveal">
+              <div class="media-frame" style="--ar: 3/4">
+                <img
+                  src="images/equipe-01.jpg"
+                  alt="Foto do(a) responsável técnico"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <circle cx="12" cy="8" r="3.4" />
+                    <path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6" />
+                  </svg>
+                  <p>Foto do integrante</p>
+                  <code>images/equipe-01.jpg</code>
+                </div>
+              </div>
+              <h3>Nome do(a) engenheiro(a)</h3>
+              <span>Engenheiro(a) Civil — Responsável Técnico</span>
+            </div>
+            <div class="team-card reveal">
+              <div class="media-frame" style="--ar: 3/4">
+                <img
+                  src="images/equipe-02.jpg"
+                  alt="Foto da equipe de obras"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <circle cx="12" cy="8" r="3.4" />
+                    <path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6" />
+                  </svg>
+                  <p>Foto do integrante</p>
+                  <code>images/equipe-02.jpg</code>
+                </div>
+              </div>
+              <h3>Nome do(a) coordenador(a)</h3>
+              <span>Coordenação de Obras</span>
+            </div>
+            <div class="team-card reveal">
+              <div class="media-frame" style="--ar: 3/4">
+                <img
+                  src="images/equipe-03.jpg"
+                  alt="Foto do time administrativo"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <circle cx="12" cy="8" r="3.4" />
+                    <path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6" />
+                  </svg>
+                  <p>Foto do integrante</p>
+                  <code>images/equipe-03.jpg</code>
+                </div>
+              </div>
+              <h3>Nome do(a) responsável</h3>
+              <span>Orçamentos &amp; Relacionamento</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-strip">
+        <div class="container cta-row">
+          <div>
+            <h2>Quer conhecer nosso trabalho de perto?</h2>
+            <p style="color: rgba(255, 255, 255, 0.85); margin-top: 8px">
+              Veja projetos executados ou fale direto com nossa equipe.
+            </p>
+          </div>
+          <div class="hero-actions" style="margin-top: 0">
+            <a class="btn btn-on-dark" href="#projetos">Ver projetos</a>
+            <a class="btn btn-on-dark" href="#contato">Contato</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SERVIÇOS ================= -->
+      <section id="servicos" class="section-intro">
+        <div class="container section-intro-inner">
+          <p class="eyebrow on-dark">O que oferecemos</p>
+          <h2>Serviços técnicos, do projeto ao laudo.</h2>
+          <p class="lede">
+            Atuamos nas frentes previstas pelo escopo de engenharia (CNAE
+            71.12-0-00): elaboração de projetos, supervisão de obras e perícia
+            técnica, em estruturas civis, elétricas e industriais.
+          </p>
+        </div>
+      </section>
+
+      <section id="civil">
+        <div class="container split">
+          <div>
+            <p class="eyebrow">01 — Projeto</p>
+            <h2>Engenharia Civil, Hidráulica e de Tráfego</h2>
+            <p class="lede" style="margin-top: 18px">
+              Elaboração e gestão de projetos estruturais, hidrossanitários e de
+              sistemas viários — da concepção ao detalhamento executivo, com
+              memorial de cálculo e especificações técnicas.
+            </p>
+            <ul
+              style="
+                margin-top: 22px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+              "
+            >
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Projeto estrutural e de fundações
+              </li>
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Projetos hidráulicos e sanitários
+              </li>
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Estudo de tráfego e acessos
+              </li>
+            </ul>
+          </div>
+          <div class="split-media">
+            <div class="media-frame" style="--ar: 4/3">
+              <img
+                src="images/servico-civil.jpg"
+                alt="Projeto de engenharia civil"
+                onerror="
+                  this.onerror = null;
+                  this.closest('.media-frame').classList.add('is-empty');
+                "
+              />
+              <div class="media-placeholder">
+                <svg
+                  class="ph-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="1" />
+                  <path d="M3 15l5-5 4 4 4-5 5 6" />
+                  <circle cx="8" cy="9" r="1.4" />
+                </svg>
+                <p>Foto de projeto, planta ou obra civil</p>
+                <code>images/servico-civil.jpg</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="supervisao" class="section-paperblue">
+        <div class="container split reverse">
+          <div class="split-media">
+            <div class="media-frame" style="--ar: 4/3">
+              <img
+                src="images/servico-supervisao.jpg"
+                alt="Supervisão de obra e gerenciamento de projeto"
+                onerror="
+                  this.onerror = null;
+                  this.closest('.media-frame').classList.add('is-empty');
+                "
+              />
+              <div class="media-placeholder">
+                <svg
+                  class="ph-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="1" />
+                  <path d="M3 15l5-5 4 4 4-5 5 6" />
+                  <circle cx="8" cy="9" r="1.4" />
+                </svg>
+                <p>Foto de supervisão em canteiro de obras</p>
+                <code>images/servico-supervisao.jpg</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="eyebrow">02 — Execução</p>
+            <h2>Supervisão de Obras e Gerenciamento de Projetos</h2>
+            <p class="lede" style="margin-top: 18px">
+              Controle de materiais, acompanhamento de cronograma
+              físico-financeiro e gestão de contratos de execução — com
+              relatórios periódicos para o cliente.
+            </p>
+            <ul
+              style="
+                margin-top: 22px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+              "
+            >
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Fiscalização de obra e controle de qualidade
+              </li>
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Gerenciamento de cronograma e medições
+              </li>
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Supervisão de contratos com fornecedores
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="laudos">
+        <div class="container split">
+          <div>
+            <p class="eyebrow">03 — Diagnóstico</p>
+            <h2>Vistoria, Perícia Técnica e Laudos</h2>
+            <p class="lede" style="margin-top: 18px">
+              Avaliação, arbitramento e parecer técnico de engenharia para
+              compra e venda de imóveis, sinistros, financiamentos e disputas
+              contratuais.
+            </p>
+            <ul
+              style="
+                margin-top: 22px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+              "
+            >
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Vistoria cautelar de vizinhança
+              </li>
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Laudo de avaliação de imóveis
+              </li>
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Perícia técnica e parecer para processos
+              </li>
+            </ul>
+          </div>
+          <div class="split-media">
+            <div class="media-frame" style="--ar: 4/3">
+              <img
+                src="images/servico-laudos.jpg"
+                alt="Vistoria técnica e laudo de engenharia"
+                onerror="
+                  this.onerror = null;
+                  this.closest('.media-frame').classList.add('is-empty');
+                "
+              />
+              <div class="media-placeholder">
+                <svg
+                  class="ph-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="1" />
+                  <path d="M3 15l5-5 4 4 4-5 5 6" />
+                  <circle cx="8" cy="9" r="1.4" />
+                </svg>
+                <p>Foto de vistoria ou emissão de laudo</p>
+                <code>images/servico-laudos.jpg</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="industrial" class="section-paperblue">
+        <div class="container split reverse">
+          <div class="split-media">
+            <div class="media-frame" style="--ar: 4/3">
+              <img
+                src="images/servico-industrial.jpg"
+                alt="Engenharia elétrica, mecânica e industrial"
+                onerror="
+                  this.onerror = null;
+                  this.closest('.media-frame').classList.add('is-empty');
+                "
+              />
+              <div class="media-placeholder">
+                <svg
+                  class="ph-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="1" />
+                  <path d="M3 15l5-5 4 4 4-5 5 6" />
+                  <circle cx="8" cy="9" r="1.4" />
+                </svg>
+                <p>Foto de instalação industrial ou elétrica</p>
+                <code>images/servico-industrial.jpg</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="eyebrow">04 — Especializado</p>
+            <h2>Engenharia Elétrica, Mecânica e Industrial</h2>
+            <p class="lede" style="margin-top: 18px">
+              Concepção de instalações, maquinário e processos industriais,
+              incluindo sistemas de segurança e engenharia de minas quando
+              aplicável ao projeto.
+            </p>
+            <ul
+              style="
+                margin-top: 22px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+              "
+            >
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Projetos elétricos e de automação
+              </li>
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Layout de instalações industriais
+              </li>
+              <li style="color: var(--ink-70); font-size: 0.92rem">
+                — Sistemas de segurança e prevenção
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Também atendemos</p>
+              <h2>Outras frentes técnicas</h2>
+            </div>
+          </div>
+          <div class="grid grid-2">
+            <div class="card reveal">
+              <span class="card-code">CNAE 71.12-0 / 05</span>
+              <h3>Engenharia Ambiental e Acústica</h3>
+              <p>
+                Estudos de impacto, licenciamento ambiental e controle de ruído
+                para empreendimentos residenciais e industriais.
+              </p>
+            </div>
+            <div class="card reveal">
+              <span class="card-code">CNAE 71.12-0 / 06</span>
+              <h3>Concepção de Maquinário e Instalações</h3>
+              <p>
+                Desenvolvimento de layout de processos e instalações industriais
+                sob medida para cada operação.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-paperblue">
+        <div class="container" style="max-width: 820px">
+          <div class="section-head" style="margin-bottom: 20px">
+            <div>
+              <p class="eyebrow">Perguntas frequentes</p>
+              <h2>Antes de solicitar seu orçamento</h2>
+            </div>
+          </div>
+          <details class="faq-item" open>
+            <summary>Como funciona o orçamento inicial?</summary>
+            <p>
+              Enviamos um formulário com as informações do projeto (tipo,
+              localização e escopo) e retornamos com uma avaliação técnica
+              preliminar e proposta de trabalho.
+            </p>
+          </details>
+          <details class="faq-item">
+            <summary>A empresa emite ART/RRT?</summary>
+            <p>
+              Sim. Cada serviço executado é acompanhado da respectiva Anotação
+              ou Registro de Responsabilidade Técnica, conforme a natureza do
+              projeto.
+            </p>
+          </details>
+          <details class="faq-item">
+            <summary>Vocês atendem fora de Belo Horizonte?</summary>
+            <p>
+              Atendemos a região metropolitana de Belo Horizonte; para outras
+              localidades, consulte disponibilidade diretamente com nossa
+              equipe.
+            </p>
+          </details>
+          <details class="faq-item">
+            <summary>
+              É possível contratar apenas a vistoria ou o laudo?
+            </summary>
+            <p>
+              Sim, os serviços de vistoria, perícia e laudo técnico podem ser
+              contratados de forma avulsa, sem necessidade de projeto completo.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section class="cta-strip">
+        <div class="container cta-row">
+          <div>
+            <h2>Pronto para começar seu projeto?</h2>
+            <p style="color: rgba(255, 255, 255, 0.85); margin-top: 8px">
+              Conte o que você precisa e retornamos com os próximos passos.
+            </p>
+          </div>
+          <a class="btn btn-on-dark" href="#contato">Solicitar orçamento</a>
+        </div>
+      </section>
+
+      <!-- ================= PROJETOS ================= -->
+      <section id="projetos" class="section-intro">
+        <div class="container section-intro-inner">
+          <p class="eyebrow on-dark">Portfólio</p>
+          <h2>Projetos que saíram do papel.</h2>
+          <p class="lede">
+            Uma amostra do tipo de trabalho que conduzimos — substitua pelas
+            fotos e descrições reais das suas obras entregues.
+          </p>
+        </div>
+      </section>
+
+      <section class="section-tight">
+        <div class="container">
+          <div
+            class="filters"
+            role="tablist"
+            aria-label="Filtrar projetos por categoria"
+          >
+            <button class="filter-tag is-active" data-filter="todos">
+              Todos
+            </button>
+            <button class="filter-tag" data-filter="residencial">
+              Residencial
+            </button>
+            <button class="filter-tag" data-filter="comercial">
+              Comercial
+            </button>
+            <button class="filter-tag" data-filter="industrial">
+              Industrial
+            </button>
+            <button class="filter-tag" data-filter="reforma">
+              Reforma &amp; Laudo
+            </button>
+          </div>
+
+          <div class="projects-grid">
+            <div class="project-card reveal" data-category="residencial">
+              <div class="media-frame" style="--ar: 4/3">
+                <img
+                  src="images/projeto-residencial-01.jpg"
+                  alt="Projeto residencial"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="3" y="4" width="18" height="16" rx="1" />
+                    <path d="M3 15l5-5 4 4 4-5 5 6" />
+                    <circle cx="8" cy="9" r="1.4" />
+                  </svg>
+                  <p>Foto do projeto residencial</p>
+                  <code>images/projeto-residencial-01.jpg</code>
+                </div>
+              </div>
+              <span class="p-tag">Residencial</span>
+              <h3>Nome do projeto ou bairro</h3>
+              <p>
+                Breve descrição do escopo: metragem, tipo de obra e serviço
+                prestado.
+              </p>
+            </div>
+
+            <div class="project-card reveal" data-category="comercial">
+              <div class="media-frame" style="--ar: 4/3">
+                <img
+                  src="images/projeto-comercial-01.jpg"
+                  alt="Projeto comercial"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="3" y="4" width="18" height="16" rx="1" />
+                    <path d="M3 15l5-5 4 4 4-5 5 6" />
+                    <circle cx="8" cy="9" r="1.4" />
+                  </svg>
+                  <p>Foto do projeto comercial</p>
+                  <code>images/projeto-comercial-01.jpg</code>
+                </div>
+              </div>
+              <span class="p-tag">Comercial</span>
+              <h3>Nome do projeto ou bairro</h3>
+              <p>
+                Breve descrição do escopo: metragem, tipo de obra e serviço
+                prestado.
+              </p>
+            </div>
+
+            <div class="project-card reveal" data-category="industrial">
+              <div class="media-frame" style="--ar: 4/3">
+                <img
+                  src="images/projeto-industrial-01.jpg"
+                  alt="Projeto industrial"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="3" y="4" width="18" height="16" rx="1" />
+                    <path d="M3 15l5-5 4 4 4-5 5 6" />
+                    <circle cx="8" cy="9" r="1.4" />
+                  </svg>
+                  <p>Foto do projeto industrial</p>
+                  <code>images/projeto-industrial-01.jpg</code>
+                </div>
+              </div>
+              <span class="p-tag">Industrial</span>
+              <h3>Nome do projeto ou cliente</h3>
+              <p>
+                Breve descrição do escopo: metragem, tipo de obra e serviço
+                prestado.
+              </p>
+            </div>
+
+            <div class="project-card reveal" data-category="reforma">
+              <div class="media-frame" style="--ar: 4/3">
+                <img
+                  src="images/projeto-reforma-01.jpg"
+                  alt="Reforma ou laudo técnico"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="3" y="4" width="18" height="16" rx="1" />
+                    <path d="M3 15l5-5 4 4 4-5 5 6" />
+                    <circle cx="8" cy="9" r="1.4" />
+                  </svg>
+                  <p>Foto da reforma ou vistoria</p>
+                  <code>images/projeto-reforma-01.jpg</code>
+                </div>
+              </div>
+              <span class="p-tag">Reforma &amp; Laudo</span>
+              <h3>Nome do projeto ou bairro</h3>
+              <p>
+                Breve descrição do escopo: metragem, tipo de obra e serviço
+                prestado.
+              </p>
+            </div>
+
+            <div class="project-card reveal" data-category="residencial">
+              <div class="media-frame" style="--ar: 4/3">
+                <img
+                  src="images/projeto-residencial-02.jpg"
+                  alt="Projeto residencial"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="3" y="4" width="18" height="16" rx="1" />
+                    <path d="M3 15l5-5 4 4 4-5 5 6" />
+                    <circle cx="8" cy="9" r="1.4" />
+                  </svg>
+                  <p>Foto do projeto residencial</p>
+                  <code>images/projeto-residencial-02.jpg</code>
+                </div>
+              </div>
+              <span class="p-tag">Residencial</span>
+              <h3>Nome do projeto ou bairro</h3>
+              <p>
+                Breve descrição do escopo: metragem, tipo de obra e serviço
+                prestado.
+              </p>
+            </div>
+
+            <div class="project-card reveal" data-category="comercial">
+              <div class="media-frame" style="--ar: 4/3">
+                <img
+                  src="images/projeto-comercial-02.jpg"
+                  alt="Projeto comercial"
+                  onerror="
+                    this.onerror = null;
+                    this.closest('.media-frame').classList.add('is-empty');
+                  "
+                />
+                <div class="media-placeholder">
+                  <svg
+                    class="ph-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="3" y="4" width="18" height="16" rx="1" />
+                    <path d="M3 15l5-5 4 4 4-5 5 6" />
+                    <circle cx="8" cy="9" r="1.4" />
+                  </svg>
+                  <p>Foto do projeto comercial</p>
+                  <code>images/projeto-comercial-02.jpg</code>
+                </div>
+              </div>
+              <span class="p-tag">Comercial</span>
+              <h3>Nome do projeto ou bairro</h3>
+              <p>
+                Breve descrição do escopo: metragem, tipo de obra e serviço
+                prestado.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-strip">
+        <div class="container cta-row">
+          <div>
+            <h2>Seu projeto pode ser o próximo aqui.</h2>
+            <p style="color: rgba(255, 255, 255, 0.85); margin-top: 8px">
+              Traga sua ideia — cuidamos da parte técnica.
+            </p>
+          </div>
+          <a class="btn btn-on-dark" href="#contato">Solicitar orçamento</a>
+        </div>
+      </section>
+
+      <!-- ================= CONTATO ================= -->
+      <section id="contato" class="section-intro">
+        <div class="container section-intro-inner">
+          <p class="eyebrow on-dark">Fale conosco</p>
+          <h2>Vamos falar sobre o seu projeto.</h2>
+          <p class="lede">
+            Envie os detalhes da obra ou fale diretamente pelo telefone e
+            Instagram. Retornamos com os próximos passos técnicos.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div class="container contact-grid">
+          <div>
+            <p class="eyebrow">Informações</p>
+            <h2>Coimbra Engenharia e Construções LTDA</h2>
+
+            <div class="info-list">
+              <div class="info-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path
+                    d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"
+                  />
+                  <circle cx="12" cy="10" r="2.4" />
+                </svg>
+                <div>
+                  <h3>Endereço</h3>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Rua+David+Fonseca%2C+1231+-+Milion%C3%A1rios%2C+Belo+Horizonte+-+MG%2C+30620-230"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Rua David Fonseca, 1231 — Milionários,<br />Belo Horizonte -
+                    MG, 30620-230
+                  </a>
+                </div>
+              </div>
+              <div class="info-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path
+                    d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"
+                  />
+                </svg>
+                <div>
+                  <h3>Telefone / WhatsApp</h3>
+                  <a href="tel:+5531986674654">(31) 98667-4654</a>
+                </div>
+              </div>
+              <div class="info-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.2" cy="6.8" r="1" />
+                </svg>
+                <div>
+                  <h3>Instagram</h3>
+                  <a
+                    href="https://www.instagram.com/coimbraengeeconstrucoes/"
+                    target="_blank"
+                    rel="noopener"
+                    >@coimbraengeeconstrucoes</a
+                  >
+                </div>
+              </div>
+              <div class="info-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 3" />
+                </svg>
+                <div>
+                  <h3>Atendimento</h3>
+                  <p>Segunda a sexta, das 8h às 18h</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-frame" style="margin-top: 36px">
+              <iframe
+                src="https://www.google.com/maps?q=Rua+David+Fonseca,+1231+-+Milion%C3%A1rios,+Belo+Horizonte+-+MG,+30620-230&output=embed"
+                title="Mapa — Rua David Fonseca, 1231, Milionários, Belo Horizonte"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              >
+              </iframe>
+            </div>
+          </div>
+
+          <div>
+            <p class="eyebrow">Orçamento</p>
+            <h2>Conte os detalhes do seu projeto</h2>
+            <p class="lede" style="margin-top: 14px; margin-bottom: 28px">
+              Quanto mais informação, mais rápido retornamos com uma avaliação
+              técnica.
+            </p>
+
+            <form class="contact-form" action="#" method="post">
+              <div class="form-row">
+                <div class="field">
+                  <label for="nome">Nome completo</label
+                  ><input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    required
+                    autocomplete="name"
+                  />
+                </div>
+                <div class="field">
+                  <label for="telefone">Telefone / WhatsApp</label
+                  ><input
+                    type="tel"
+                    id="telefone"
+                    name="telefone"
+                    required
+                    autocomplete="tel"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <label for="email">E-mail</label
+                ><input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label for="tipo">Tipo de projeto</label>
+                  <select id="tipo" name="tipo">
+                    <option>Residencial</option>
+                    <option>Comercial</option>
+                    <option>Industrial</option>
+                    <option>Vistoria / Laudo</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="bairro">Cidade / Bairro da obra</label
+                  ><input type="text" id="bairro" name="bairro" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="mensagem">Descreva o projeto</label
+                ><textarea
+                  id="mensagem"
+                  name="mensagem"
+                  required
+                  placeholder="Metragem, escopo, prazo desejado..."
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="align-self: flex-start"
+              >
+                Enviar solicitação
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </button>
+              <p class="form-note form-status">
+                Preencha os campos acima e envie — nossa equipe retorna em até 1
+                dia útil.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand" href="#inicio">
+              <img
+                class="brand-logo"
+                src="images/logo-white.png"
+                alt="Coimbra Engenharia e Construções"
+              />
+            </a>
+            <p>
+              Engenharia civil, supervisão de obras e laudos técnicos em Belo
+              Horizonte, MG.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h3>Navegação</h3>
+            <ul>
+              <li><a href="#inicio">Início</a></li>
+              <li><a href="#empresa">Empresa</a></li>
+              <li><a href="#servicos">Serviços</a></li>
+              <li><a href="#projetos">Projetos</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Serviços</h3>
+            <ul>
+              <li><a href="#civil">Engenharia civil</a></li>
+              <li><a href="#supervisao">Supervisão de obras</a></li>
+              <li><a href="#laudos">Vistorias e laudos</a></li>
+              <li><a href="#industrial">Engenharia industrial</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Contato</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Rua+David+Fonseca%2C+1231+-+Milion%C3%A1rios%2C+Belo+Horizonte+-+MG%2C+30620-230"
+                  target="_blank"
+                  rel="noopener"
+                  >Rua David Fonseca, 1231 — Milionários, Belo Horizonte/MG</a
+                >
+              </li>
+              <li><a href="tel:+5531986674654">(31) 98667-4654</a></li>
+              <li>
+                <a
+                  href="https://www.instagram.com/coimbraengeeconstrucoes/"
+                  target="_blank"
+                  rel="noopener"
+                  >@coimbraengeeconstrucoes</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span
+            >© <span id="year"></span> Coimbra Engenharia e Construções
+            LTDA</span
+          >
+          <a
+            href="https://www.instagram.com/coimbraengeeconstrucoes/"
+            target="_blank"
+            rel="noopener"
+            >Instagram ↗</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Menu mobile
+        var toggle = document.querySelector(".nav-toggle");
+        var links = document.querySelector(".nav-links");
+        if (toggle && links) {
+          toggle.addEventListener("click", function () {
+            var open = links.classList.toggle("is-open");
+            toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+          links.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () {
+              links.classList.remove("is-open");
+            });
+          });
+        }
+
+        // Revelação suave ao rolar
+        var reveals = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window && reveals.length) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-visible");
+                  io.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.12 },
+          );
+          reveals.forEach(function (el) {
+            io.observe(el);
+          });
+        } else {
+          reveals.forEach(function (el) {
+            el.classList.add("is-visible");
+          });
+        }
+
+        // Filtros de projetos
+        var filterButtons = document.querySelectorAll(".filter-tag");
+        var projectCards = document.querySelectorAll(".project-card");
+        if (filterButtons.length && projectCards.length) {
+          filterButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              filterButtons.forEach(function (b) {
+                b.classList.remove("is-active");
+              });
+              btn.classList.add("is-active");
+              var filter = btn.getAttribute("data-filter");
+              projectCards.forEach(function (card) {
+                var cat = card.getAttribute("data-category");
+                card.style.display =
+                  filter === "todos" || filter === cat ? "" : "none";
+              });
+            });
+          });
+        }
+
+        // Formulário de contato (demonstrativo — sem backend)
+        var form = document.querySelector(".contact-form");
+        if (form) {
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var noteEl = form.querySelector(".form-status");
+            if (noteEl) {
+              noteEl.textContent =
+                "Mensagem pronta para envio. Configure um backend ou serviço de formulário (ex.: Formspree) para receber os contatos por e-mail.";
             }
           });
         }
-      });
-    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-    sections.forEach(function(sec){ spy.observe(sec); });
-  }
-})();
-</script>
-</body>
+
+        // Scrollspy — destaca o item de menu correspondente à seção visível
+        var navLinks = document.querySelectorAll("#nav-links a[data-nav]");
+        var sections = ["inicio", "empresa", "servicos", "projetos", "contato"]
+          .map(function (id) {
+            return document.getElementById(id);
+          })
+          .filter(Boolean);
+
+        if (
+          "IntersectionObserver" in window &&
+          sections.length &&
+          navLinks.length
+        ) {
+          var spy = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  var id = entry.target.id;
+                  navLinks.forEach(function (link) {
+                    if (link.getAttribute("data-nav") === id) {
+                      link.setAttribute("aria-current", "page");
+                    } else {
+                      link.removeAttribute("aria-current");
+                    }
+                  });
+                }
+              });
+            },
+            { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+          );
+          sections.forEach(function (sec) {
+            spy.observe(sec);
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>
